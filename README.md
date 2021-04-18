@@ -7,7 +7,12 @@ Phonebook system model created with Java Swing for practical design patterns
 
 Capture:
 
-![alt text](https://github.com/ArkSoftSystems/Agenda/blob/main/Agenda/images/Capture-1.PNG)
+![alt text](https://github.com/ArkSoftSystems/Agenda/blob/main/Agenda/images/Capture-6.PNG)
+![alt text](https://github.com/ArkSoftSystems/Agenda/blob/main/Agenda/images/Capture-5.PNG)
+![alt text](https://github.com/ArkSoftSystems/Agenda/blob/main/Agenda/images/Capture-3.PNG)
+
+
+
 
 Matias Carrion
 Arksoftsystemsinfo@gmail.com
