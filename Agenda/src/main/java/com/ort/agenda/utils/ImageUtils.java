@@ -21,7 +21,7 @@ import javax.swing.JLabel;
  */
 public class ImageUtils {
 
-    public static JLabel getImageFile(String imageName) {
+    public static JLabel getJLabelImage(String imageName) {
         URL url = ClassLoader.getSystemClassLoader().getResource("./images/" + imageName);
         try {
             BufferedImage myPicture = ImageIO.read(new File(url.getPath()));
