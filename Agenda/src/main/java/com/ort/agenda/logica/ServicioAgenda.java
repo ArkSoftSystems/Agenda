@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uy.edu.ort.agendaswing.logica;
+package com.ort.agenda.logica;
 
+import com.ort.agenda.dominio.TipoContacto;
 import java.util.ArrayList;
-import uy.edu.ort.agendaswing.dominio.TipoContacto;
 
 /**
  *

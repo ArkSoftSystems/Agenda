@@ -5,25 +5,35 @@
  */
 package com.ort.agenda.ui;
 
+import com.ort.agenda.dominio.Contacto;
+import com.ort.agenda.dominio.TipoContacto;
+import com.ort.agenda.dominio.Usuario;
+import com.ort.agenda.logica.FachadaServicios;
+import com.ort.agenda.ui.components.CustomAlertSignout;
+import com.ort.agenda.utils.FieldUtils;
 import com.ort.agenda.utils.FontUtils;
 import com.ort.agenda.utils.ImageUtils;
+import com.ort.agenda.utils.SessionUtils;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
-import uy.edu.ort.agendaswing.dominio.Contacto;
-import uy.edu.ort.agendaswing.dominio.TipoContacto;
-import uy.edu.ort.agendaswing.dominio.Usuario;
-import uy.edu.ort.agendaswing.logica.FachadaServicios;
 
 /**
  *
  * @author matiasc
  */
 public class Agenda extends javax.swing.JFrame {
-    
+
     private Usuario usuario;
+
+    private static final String CONTACT_IMAGE_LOGO = "contact-5.png";
+    private static final String SIDE_IMAGE = "home-4.png";
+    private static final String ROBOT_THIN_FONT = "Roboto-Thin";
+    private static final String ROBOT_REGULAR_FONT = "Roboto-Regular";
+    private static final Color WHITE_TEXT_ALERT = new Color(255, 255, 255);
 
     /**
      * Creates new form Home
@@ -33,45 +43,44 @@ public class Agenda extends javax.swing.JFrame {
     public Agenda(Usuario usuario) {
         this.usuario = usuario;
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
 
-        //JOptionPane.showMessageDialog(this, "Login incorrecto, revise usuario y passoword y reintente.", "Login incorrecto", JOptionPane.ERROR_MESSAGE);
-        jPanel6.add(ImageUtils.getJLabelImage("home-4.png"));
-        
-        jLabel1.setFont(FontUtils.getCustomFont("Roboto-Thin", 48f));
-        jLabel2.setFont(FontUtils.getCustomFont("Roboto-Thin", 18f));
-        
-        jLabel3.setFont(FontUtils.getCustomFont("Roboto-Regular", 12f));
-        jLabel4.setFont(FontUtils.getCustomFont("Roboto-Regular", 12f));
-        jLabel5.setFont(FontUtils.getCustomFont("Roboto-Regular", 12f));
-        
+        jpLogoContactCreation.add(ImageUtils.getJLabelImage(CONTACT_IMAGE_LOGO));
+        jPanel6.add(ImageUtils.getJLabelImage(SIDE_IMAGE));
+        jLabel1.setFont(FontUtils.getCustomFont(ROBOT_THIN_FONT, 48f));
+        jLabel2.setFont(FontUtils.getCustomFont(ROBOT_THIN_FONT, 18f));
+        jLabel3.setFont(FontUtils.getCustomFont(ROBOT_REGULAR_FONT, 12f));
+        jLabel4.setFont(FontUtils.getCustomFont(ROBOT_REGULAR_FONT, 12f));
+        jLabel5.setFont(FontUtils.getCustomFont(ROBOT_REGULAR_FONT, 12f));
+        jLabel6.setFont(FontUtils.getCustomFont(ROBOT_REGULAR_FONT, 18f));
         jButtonAdd.setBackground(new Color(29, 29, 29));
         jButtonAdd.setUI(new BasicButtonUI());
+
         jButtonAdd.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
             }
-            
+
             @Override
             public void mousePressed(MouseEvent e) {
             }
-            
+
             @Override
             public void mouseReleased(MouseEvent e) {
             }
-            
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonAdd.setBackground(new Color(255, 255, 255));
             }
-            
+
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonAdd.setBackground(new Color(29, 29, 29));
             }
         });
-        
+
         JButton[] buttons = {
             jButtonLogout, jButtonCreate, jButtonSearchContact, jButtonHome
         };
@@ -82,37 +91,37 @@ public class Agenda extends javax.swing.JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     jbtn.setBackground(new Color(20, 20, 20));
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent e) {
                     jbtn.setBackground(new Color(29, 29, 29));
                 }
             });
         }
-        
+
         cargarListaContactos();
         cargarComboTiposContacto();
     }
-    
+
     private void cargarComboTiposContacto() {
         for (TipoContacto t : FachadaServicios.getInstance().getTiposContacto()) {
             jComboContactType.addItem(t);
         }
     }
-    
+
     private void cargarListaContactos() {
         jList1.setListData(usuario.getAgenda().getContactos().toArray());
     }
@@ -128,11 +137,12 @@ public class Agenda extends javax.swing.JFrame {
 
         pnlRoot = new javax.swing.JPanel();
         pnlSide = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jpPrincipalButtons = new javax.swing.JPanel();
         jButtonHome = new javax.swing.JButton();
+        jpSecondaryButtons = new javax.swing.JPanel();
         jButtonCreate = new javax.swing.JButton();
         jButtonSearchContact = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jpLogout = new javax.swing.JPanel();
         jButtonLogout = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -142,7 +152,6 @@ public class Agenda extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jPanel7 = new javax.swing.JPanel();
@@ -154,18 +163,22 @@ public class Agenda extends javax.swing.JFrame {
         jComboContactType = new javax.swing.JComboBox();
         jPanel9 = new javax.swing.JPanel();
         jButtonAdd = new javax.swing.JButton();
+        jlAlertMessage = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jpLogoContactCreation = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 750));
+        setPreferredSize(new java.awt.Dimension(1300, 850));
 
         pnlRoot.setLayout(new java.awt.BorderLayout());
 
         pnlSide.setBackground(new java.awt.Color(20, 20, 20));
         pnlSide.setPreferredSize(new java.awt.Dimension(90, 0));
 
-        jPanel1.setBackground(new java.awt.Color(20, 20, 20));
-        jPanel1.setPreferredSize(new java.awt.Dimension(80, 160));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jpPrincipalButtons.setBackground(new java.awt.Color(20, 20, 20));
+        jpPrincipalButtons.setPreferredSize(new java.awt.Dimension(80, 160));
+        jpPrincipalButtons.setLayout(new java.awt.GridBagLayout());
 
         jButtonHome.setBackground(new java.awt.Color(255, 255, 255));
         jButtonHome.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,9 +190,13 @@ public class Agenda extends javax.swing.JFrame {
                 jButtonHomeMouseClicked(evt);
             }
         });
-        jPanel1.add(jButtonHome, new java.awt.GridBagConstraints());
+        jpPrincipalButtons.add(jButtonHome, new java.awt.GridBagConstraints());
 
-        pnlSide.add(jPanel1);
+        pnlSide.add(jpPrincipalButtons);
+
+        jpSecondaryButtons.setBackground(new java.awt.Color(20, 20, 20));
+        jpSecondaryButtons.setPreferredSize(new java.awt.Dimension(80, 200));
+        jpSecondaryButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 25));
 
         jButtonCreate.setBackground(new java.awt.Color(29, 29, 29));
         jButtonCreate.setForeground(new java.awt.Color(20, 20, 20));
@@ -191,24 +208,55 @@ public class Agenda extends javax.swing.JFrame {
                 jButtonCreateMouseClicked(evt);
             }
         });
-        pnlSide.add(jButtonCreate);
+        jpSecondaryButtons.add(jButtonCreate);
 
         jButtonSearchContact.setBackground(new java.awt.Color(29, 29, 29));
         jButtonSearchContact.setForeground(new java.awt.Color(20, 20, 20));
         jButtonSearchContact.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find_user_male_20px.png"))); // NOI18N
         jButtonSearchContact.setPreferredSize(new java.awt.Dimension(60, 60));
-        pnlSide.add(jButtonSearchContact);
+        jButtonSearchContact.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSearchContactMouseClicked(evt);
+            }
+        });
+        jpSecondaryButtons.add(jButtonSearchContact);
 
-        jPanel3.setBackground(new java.awt.Color(20, 20, 20));
-        jPanel3.setPreferredSize(new java.awt.Dimension(80, 200));
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 25));
-        pnlSide.add(jPanel3);
+        pnlSide.add(jpSecondaryButtons);
+
+        jpLogout.setBackground(new java.awt.Color(20, 20, 20));
 
         jButtonLogout.setBackground(new java.awt.Color(29, 29, 29));
         jButtonLogout.setForeground(new java.awt.Color(20, 20, 20));
         jButtonLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout_rounded_up_20px.png"))); // NOI18N
         jButtonLogout.setPreferredSize(new java.awt.Dimension(60, 60));
-        pnlSide.add(jButtonLogout);
+        jButtonLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonLogoutMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpLogoutLayout = new javax.swing.GroupLayout(jpLogout);
+        jpLogout.setLayout(jpLogoutLayout);
+        jpLogoutLayout.setHorizontalGroup(
+            jpLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jpLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpLogoutLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jButtonLogout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jpLogoutLayout.setVerticalGroup(
+            jpLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 123, Short.MAX_VALUE)
+            .addGroup(jpLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpLogoutLayout.createSequentialGroup()
+                    .addGap(0, 31, Short.MAX_VALUE)
+                    .addComponent(jButtonLogout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 32, Short.MAX_VALUE)))
+        );
+
+        pnlSide.add(jpLogout);
 
         pnlRoot.add(pnlSide, java.awt.BorderLayout.WEST);
 
@@ -236,30 +284,20 @@ public class Agenda extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("The most awesome phone book system");
+        jLabel2.setText("Create an contact:");
         jPanel4.add(jLabel2);
 
         jPanel10.setBackground(new java.awt.Color(29, 29, 29));
-
-        jLabel9.setBackground(new java.awt.Color(30, 30, 30));
-        jLabel9.setForeground(new java.awt.Color(82, 82, 82));
-        jLabel9.setText("Version 1.0.0");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addContainerGap())
+            .addGap(0, 1440, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addContainerGap())
+            .addGap(0, 47, Short.MAX_VALUE)
         );
 
         jList1.setBackground(new java.awt.Color(29, 29, 29));
@@ -273,6 +311,7 @@ public class Agenda extends javax.swing.JFrame {
 
         jtfContactName.setBackground(new java.awt.Color(29, 29, 29));
         jtfContactName.setForeground(new java.awt.Color(255, 255, 255));
+        jtfContactName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtfContactName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfContactNameActionPerformed(evt);
@@ -281,6 +320,7 @@ public class Agenda extends javax.swing.JFrame {
 
         jtfContactPhone.setBackground(new java.awt.Color(29, 29, 29));
         jtfContactPhone.setForeground(new java.awt.Color(255, 255, 255));
+        jtfContactPhone.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Type");
@@ -304,13 +344,15 @@ public class Agenda extends javax.swing.JFrame {
         });
         jPanel9.add(jButtonAdd, java.awt.BorderLayout.CENTER);
 
+        jlAlertMessage.setForeground(new java.awt.Color(204, 204, 204));
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addGap(73, 73, 73)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
@@ -322,9 +364,10 @@ public class Agenda extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(22, 22, 22)))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlAlertMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                     .addComponent(jtfContactName)
                     .addComponent(jtfContactPhone)
-                    .addComponent(jComboContactType, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboContactType, 0, 176, Short.MAX_VALUE))
                 .addGap(68, 68, 68))
         );
         jPanel7Layout.setVerticalGroup(
@@ -337,55 +380,100 @@ public class Agenda extends javax.swing.JFrame {
                     .addComponent(jComboContactType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfContactName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfContactName, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfContactPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlAlertMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel8.setBackground(new java.awt.Color(29, 29, 29));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Contact List:");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 35, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel6)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jpLogoContactCreation.setBackground(new java.awt.Color(29, 29, 29));
+        jpLogoContactCreation.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(pnlCenterLayout.createSequentialGroup()
-                                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE))
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(24, 24, 24)
+                                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
+                                .addContainerGap(35, Short.MAX_VALUE)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jpLogoContactCreation, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCenterLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(pnlCenterLayout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpLogoContactCreation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113))
+                    .addGroup(pnlCenterLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)))
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlRoot.add(pnlCenter, java.awt.BorderLayout.CENTER);
@@ -404,18 +492,48 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfContactNameActionPerformed
 
     private void jButtonAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddMouseClicked
+        addContact();
+    }//GEN-LAST:event_jButtonAddMouseClicked
+
+    public void addContact() {
         Contacto contacto = new Contacto();
         contacto.setNombre(jtfContactName.getText());
         contacto.setTelefono(jtfContactPhone.getText());
         contacto.setTipoContacto((TipoContacto) jComboContactType.getSelectedItem());
-        usuario.getAgenda().agregarContacto(contacto);
-        cargarListaContactos();
-    }//GEN-LAST:event_jButtonAddMouseClicked
+        boolean isAdded = usuario.getAgenda().agregarContacto(contacto);
+        if (contacto.validar()) {
+            if (isAdded) {
+                cargarListaContactos();
+                FieldUtils.cleanJLabel(jlAlertMessage);
+                jlAlertMessage.setText("Contact added!");
+            } else {
+                jlAlertMessage.setText("* The Contact already exist");
+                setAlertBorderCreationContact();
+            }
+        } else {
+            jlAlertMessage.setText("* Invalid data");
+            setAlertBorderCreationContact();
+        }
+    }
 
+    public void setAlertBorderCreationContact() {
+        jtfContactName.setBorder(BorderFactory.createLineBorder(WHITE_TEXT_ALERT));
+        jtfContactPhone.setBorder(BorderFactory.createLineBorder(WHITE_TEXT_ALERT));
+
+    }
     private void jButtonHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonHomeMouseClicked
         this.setVisible(false);
         new Home(usuario).setVisible(true);
     }//GEN-LAST:event_jButtonHomeMouseClicked
+
+    private void jButtonLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonLogoutMouseClicked
+        new CustomAlertSignout(this, true, !SessionUtils.checkLogin(usuario)).setVisible(true);
+    }//GEN-LAST:event_jButtonLogoutMouseClicked
+
+    private void jButtonSearchContactMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSearchContactMouseClicked
+        this.setVisible(false);
+        new Search(usuario).setVisible(true);
+    }//GEN-LAST:event_jButtonSearchContactMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
@@ -429,18 +547,22 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JList jList1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jlAlertMessage;
+    private javax.swing.JPanel jpLogoContactCreation;
+    private javax.swing.JPanel jpLogout;
+    private javax.swing.JPanel jpPrincipalButtons;
+    private javax.swing.JPanel jpSecondaryButtons;
     private javax.swing.JTextField jtfContactName;
     private javax.swing.JTextField jtfContactPhone;
     private javax.swing.JPanel pnlCenter;

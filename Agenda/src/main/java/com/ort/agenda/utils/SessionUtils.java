@@ -5,7 +5,8 @@
  */
 package com.ort.agenda.utils;
 
-import uy.edu.ort.agendaswing.dominio.Usuario;
+import com.ort.agenda.dominio.Usuario;
+
 
 /**
  *

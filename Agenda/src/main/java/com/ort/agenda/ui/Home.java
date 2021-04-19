@@ -5,7 +5,11 @@
  */
 package com.ort.agenda.ui;
 
+import com.ort.agenda.dominio.Usuario;
+import com.ort.agenda.logica.FachadaServicios;
+import com.ort.agenda.ui.components.CustomAlertSignout;
 import com.ort.agenda.ui.components.CustomAlertSignIn;
+import com.ort.agenda.ui.components.CustomAlertSuccess;
 import com.ort.agenda.utils.FieldUtils;
 import com.ort.agenda.utils.FontUtils;
 import com.ort.agenda.utils.ImageUtils;
@@ -20,8 +24,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicButtonUI;
-import uy.edu.ort.agendaswing.dominio.Usuario;
-import uy.edu.ort.agendaswing.logica.FachadaServicios;
 
 /**
  *
@@ -115,6 +117,12 @@ public class Home extends javax.swing.JFrame {
         }
 
         if (SessionUtils.checkLogin(this.usuario)) {
+            updateHomeContainer();
+        }
+    }
+
+    private void updateHomeContainer() {
+        if (SessionUtils.checkLogin(this.usuario)) {
             jpLogin.setVisible(false);
             jpImage.setVisible(false);
             jPanelLoginContainer.setVisible(false);
@@ -151,8 +159,10 @@ public class Home extends javax.swing.JFrame {
             addWarningMessageLogin("* Invalid mail or password");
             showWarningMessageLogin();
         } else {
-            new Agenda(usuario).setVisible(true);
-            this.setVisible(false);
+            updateHomeContainer();
+            CustomAlertSuccess customAlertSuccess = new CustomAlertSuccess(this, true, "Welcome " + usuario.getUsuario());
+            customAlertSuccess.setRelativeCenterPosition();
+            customAlertSuccess.setVisible(true);
         }
     }
 
@@ -220,10 +230,9 @@ public class Home extends javax.swing.JFrame {
         jpImage = new javax.swing.JPanel();
         jpInsideImage = new javax.swing.JPanel();
         jpVersionContainer = new javax.swing.JPanel();
-        jlVersion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1300, 820));
+        setPreferredSize(new java.awt.Dimension(1300, 850));
         setResizable(false);
 
         pnlRoot.setLayout(new java.awt.BorderLayout());
@@ -240,6 +249,11 @@ public class Home extends javax.swing.JFrame {
         jButtonHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/home_20px.png"))); // NOI18N
         jButtonHome.setAlignmentX(2.0F);
         jButtonHome.setPreferredSize(new java.awt.Dimension(60, 60));
+        jButtonHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonHomeMouseClicked(evt);
+            }
+        });
         jpPrincipalButton.add(jButtonHome, new java.awt.GridBagConstraints());
 
         pnlSide.add(jpPrincipalButton);
@@ -354,7 +368,7 @@ public class Home extends javax.swing.JFrame {
 
         jtfUsername.setBackground(new java.awt.Color(29, 29, 29));
         jtfUsername.setForeground(new java.awt.Color(153, 153, 153));
-        jtfUsername.setToolTipText("");
+        jtfUsername.setToolTipText("Username");
         jtfUsername.setSelectionColor(new java.awt.Color(0, 51, 204));
 
         jlUsername.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -367,6 +381,7 @@ public class Home extends javax.swing.JFrame {
 
         jPasswordField.setBackground(new java.awt.Color(29, 29, 29));
         jPasswordField.setForeground(new java.awt.Color(153, 153, 153));
+        jPasswordField.setToolTipText("Password");
 
         jButtonLogIn.setBackground(new java.awt.Color(255, 255, 255));
         jButtonLogIn.setForeground(new java.awt.Color(255, 255, 255));
@@ -503,25 +518,15 @@ public class Home extends javax.swing.JFrame {
 
         jpVersionContainer.setBackground(new java.awt.Color(29, 29, 29));
 
-        jlVersion.setBackground(new java.awt.Color(30, 30, 30));
-        jlVersion.setForeground(new java.awt.Color(82, 82, 82));
-        jlVersion.setText("Version 1.0.0");
-
         javax.swing.GroupLayout jpVersionContainerLayout = new javax.swing.GroupLayout(jpVersionContainer);
         jpVersionContainer.setLayout(jpVersionContainerLayout);
         jpVersionContainerLayout.setHorizontalGroup(
             jpVersionContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpVersionContainerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlVersion)
-                .addContainerGap())
+            .addGap(0, 1789, Short.MAX_VALUE)
         );
         jpVersionContainerLayout.setVerticalGroup(
             jpVersionContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpVersionContainerLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jlVersion)
-                .addContainerGap(26, Short.MAX_VALUE))
+            .addGap(0, 61, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
@@ -576,7 +581,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonSearchContactMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSearchContactMouseClicked
         if (SessionUtils.checkLogin(usuario)) {
-            new Agenda(usuario).setVisible(true);
+            new Search(usuario).setVisible(true);
             this.setVisible(false);
         } else {
             addWarningMessageLogin("Please to enter in contact search you must first be logged in");
@@ -584,8 +589,12 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSearchContactMouseClicked
 
     private void jButtonLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonLogoutMouseClicked
-        this.dispose();
+        new CustomAlertSignout(this, true, !SessionUtils.checkLogin(usuario)).setVisible(true);
     }//GEN-LAST:event_jButtonLogoutMouseClicked
+
+    private void jButtonHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonHomeMouseClicked
+        cleanSignInAlertMessages();
+    }//GEN-LAST:event_jButtonHomeMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCreate;
@@ -602,7 +611,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jlPassword;
     private javax.swing.JLabel jlPrincipalSubTitle;
     private javax.swing.JLabel jlUsername;
-    private javax.swing.JLabel jlVersion;
     private javax.swing.JPanel jpDinamicPanel;
     private javax.swing.JPanel jpHomeContainer;
     private javax.swing.JPanel jpImage;

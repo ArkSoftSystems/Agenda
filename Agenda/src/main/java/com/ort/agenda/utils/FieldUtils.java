@@ -23,5 +23,9 @@ public class FieldUtils {
         label.setFont(FontUtils.getCustomFont(REGULAR_FONT, 12f));
         return label;
     }
+    
+    public static void cleanJLabel(JLabel jLabel){
+        jLabel.setText("");
+    }
 
 }
